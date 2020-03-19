@@ -1,0 +1,23 @@
+version: '3'
+services:
+  jellyfin:
+    container_name: jellyfin-server
+    ports:
+      - 8096:8096
+      - 8096:8096/udp
+    image: jellyfin/jellyfin:latest
+    volumes:
+      - ./config:/config # 这是服务端配置文件目录
+      - ./cache:/cache # 这是服务端缓存文件目录
+      - /mnt/nas-data:/media
+        # extra_hosts: 这个网址和tvdb地址都被墙了，在路由器开启指定域名翻
+        # - "api.themoviedb.org:13.224.161.90"
+    networks: 
+      - docker-service
+    restart: always
+
+
+
+networks:
+  docker-service:
+    external: true
